@@ -141,7 +141,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`,
     ]);
 
-    let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
+    let githubRef = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF);
+    let currentBranch = (githubRef && githubRef[1]) || process.env.GITHUB_REF;
     let isPullRequest = false;
     if (process.env.GITHUB_HEAD_REF) {
       // Comes from a pull request
